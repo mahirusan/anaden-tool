@@ -43,6 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #django-allauthのための設定
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.social.acocunt.providers.github',
+
     'app',
 ]
 
@@ -125,3 +133,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+#django-allauthの設定
+SITE_ID = 1 #動かしているDjangoのサイトを識別するためのID
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+#登録完了メール設定
+ACCOUNT_EMAIL_VERIFICATION = 'none' #ユーザー登録時にメールを送信しない
+ACCOUNT_EMAIL_REQUIRED = False #ユーザー登録でメールアドレスの登録を必須にするかどうか
+
+
