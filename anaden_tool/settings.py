@@ -14,9 +14,14 @@ from pathlib import Path
 import os
 import environ
 
+<<<<<<< HEAD
 
 
 env = environ.Env()
+=======
+#django-environと.envファイルの読み込み
+env = environ.Env(DEBUG=(bool))
+>>>>>>> e221f0cd388056fe9f40f51f088892d4ed557ae6
 env.read_env('.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,6 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #django-allauthのための設定
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+
     'app',
 ]
 
@@ -126,3 +139,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+#django-allauthの設定
+SITE_ID = 1 #動かしているDjangoのサイトを識別するためのID
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+#登録完了メール設定
+ACCOUNT_EMAIL_VERIFICATION = 'none' #ユーザー登録時にメールを送信しない
+ACCOUNT_EMAIL_REQUIRED = False #ユーザー登録でメールアドレスの登録を必須にするかどうか
+
+
