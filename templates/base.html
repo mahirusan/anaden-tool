@@ -76,7 +76,7 @@
                     height:100vh;
                     background:rgba(135,206,235,0.3);
                     z-index:1;
-                    padding-top:10px;
+                    padding-top:2vh;
                     transition:0.5s ease;
                 }
                 .main-contents.click-menu-open{
@@ -89,6 +89,20 @@
                     box-shadow:0 2px 5px #ccc;
                     z-index:2;
                     margin:0 auto;
+                }
+                .success_btn{
+                    padding:2px 2px;
+                    height:25px;
+                    width:25px;
+                    border-radius:50%;
+                    border:2px solid #aaa;
+                    cursor:pointer;
+                    transition:0.1s ease;
+                }
+                .success_btn.clicked{
+                    background:blue;
+                    opacity:0.8;
+                    transition:0.1s ease;
                 }
             }
             
@@ -107,6 +121,11 @@
                     $('.menu-content').stop(true).toggle('fast');
                     $('.click-menu').stop(true).animate({'width':'toggle'});
                     $('.main-contents').stop(true).toggleClass('click-menu-open');
+                });
+
+                $('.success_btn').click(function(){
+                    var $this = $(this);
+                    $this.stop(true).toggleClass('clicked');
                 });
             });
             
