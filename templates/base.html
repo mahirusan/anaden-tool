@@ -77,6 +77,12 @@
                     background:rgba(135,206,235,0.3);
                     z-index:1;
                     padding-top:10px;
+                    transition:0.5s ease;
+                }
+                .main-contents.click-menu-open{
+                    width:80%;
+                    margin:0 0 0 20%;
+                    transition:0.5s ease;
                 }
                 .card{
                     width:90%;
@@ -95,10 +101,12 @@
             document.addEventListener('DOMContentLoaded',function(){
                 $('.menu-content').toggle();
                 $('.click-menu').toggle();
+                //$('.main-contents').toggleClass('click-menu-open');
                 
                 $('.menu-btn').click(function(){
                     $('.menu-content').stop(true).toggle('fast');
                     $('.click-menu').stop(true).animate({'width':'toggle'});
+                    $('.main-contents').stop(true).toggleClass('click-menu-open');
                 });
             });
             
