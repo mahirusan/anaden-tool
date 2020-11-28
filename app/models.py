@@ -12,6 +12,7 @@ class MainTask(models.Model):
         (4,'その他'),
     )
     types = models.IntegerField('タイプ',choices=TYPES)
+    task_seq = models.IntegerField('順序',null=True,blank=True)
 
     def __str__(self):
         return self.title
@@ -28,6 +29,7 @@ class SubTask(models.Model):
         (3,'完了'),
     )
     condition = models.IntegerField('状態',choices=CONDITIONS,default=1)
+    task_seq = models.IntegerField('順序',null=True,blank=True)
     created_at = models.DateTimeField('作成日',auto_now=True)
     updated_at = models.DateTimeField('更新日',auto_now=True)
     
