@@ -32,5 +32,10 @@ class SubTask(models.Model):
     task_seq = models.IntegerField('順序',null=True,blank=True)
     created_at = models.DateTimeField('作成日',auto_now=True)
     updated_at = models.DateTimeField('更新日',auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+        
     
 
