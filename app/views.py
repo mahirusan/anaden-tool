@@ -7,12 +7,6 @@ class IndexView(generic.RedirectView):
     url = '/storys/'
 
 
-def index(request):
-    if request.method == 'GET':
-        context = {
-            'message':"Hello World",
-        }
-        return render(request,'app/index.html',context)
         
 class StorysView(generic.ListView):
     template_name = "app/storys.html"
