@@ -1,0 +1,46 @@
+{% extends  "base.html" %}
+
+{% block page_title %}トップページ{% endblock %}
+
+{% block content %}
+<!-- ストーリー達成率カードの設置-->
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">あなたのストーリーの達成率は</h5>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+            role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:75%;text-align:center;"></div>
+        </div>
+        <div class="progress-values" style="text-align:center;">
+            <h3>75%です</h3>
+        </div>
+    </div>
+</div>
+
+<div style="height:2vh;"></div>
+
+<!-- ストーリータスクカードの設置-->
+{% for story in storys %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ story.title }}</h5>
+
+        {% load sort_tasks %}
+        {% for task in story.subtask_set.all|sort_task:'task_seq' %}
+        <div class="card task-contents" style="padding:0.3rem;">
+            <div class="row">
+                <div class="col-md-1" style="padding:0 0 0 30px;">
+                    <div class="success_btn"></div>
+                </div>
+                <div class="col-md-11">
+                    <p>{{ task.title }}</p>
+                </div>
+            </div>
+        </div>
+        <div style="height:0.3vh;"></div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
