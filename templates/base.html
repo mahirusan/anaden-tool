@@ -28,12 +28,30 @@
                     $('.main-contents').stop(true).toggleClass('click-menu-open');
                 });
 
+                //完了ボタンクリック時に動く
                 $('.success_btn').click(function(){
                     var $this = $(this);
+                    var taskId = $this.data('taskid');
+                    var condition = $this.data('condition');
                     var card = $this.parents('.card.task-contents');
-                    $this.stop(true).toggleClass('clicked');
-                    card.slideToggle('fast');
-                    console.log(card);
+                    $.ajax({
+                        type:"get",
+                        url:"{% url 'app:condition_change' %}",
+                        dataType:"json",
+                        data:{
+                            "task_id":taskId,
+                            "condition":condition
+                        }
+                    })
+                    .done(function(data){
+                        console.log('Ajax Success');
+                        $this.stop(true).toggleClass('clicked');
+                        card.slideToggle('fast');
+                    }).fail(function(msg){
+                        console.log('Ajax Error');
+                        // console.log(taskId);
+                        // console.log(condition);
+                    });
                 });
             });
             

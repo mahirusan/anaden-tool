@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import IndexView,StorysView、SubTaskConditionChangeView
+from .views import IndexView,StorysView,SubTaskConditionChangeView
 
 app_name = 'app'
 

@@ -30,7 +30,7 @@
         <div class="card task-contents" style="padding:0.3rem;">
             <div class="row">
                 <div class="col-md-1" style="padding:0 0 0 30px;">
-                    <div class="success_btn"></div>
+                    <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
                 </div>
                 <div class="col-md-11">
                     <p>{{ task.title }}</p>
@@ -39,6 +39,9 @@
         </div>
         <div style="height:0.3vh;"></div>
         {% endfor %}
+        <div style="text-align:right;">
+            <a>完了済タスクを見る</a>
+        </div>
     </div>
 </div>
 <div style="height:1.5vh;"></div>
