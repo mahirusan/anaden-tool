@@ -30,7 +30,10 @@
 
                 $('.success_btn').click(function(){
                     var $this = $(this);
+                    var card = $this.parents('.card.task-contents');
                     $this.stop(true).toggleClass('clicked');
+                    card.slideToggle('fast');
+                    console.log(card);
                 });
             });
             

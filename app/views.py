@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.views import generic,View
 from .models import MainTask,SubTask
+from django.http.response import HttpResponse
+import json
 
 # トップ画面はないのでストーリー一覧に飛ばす
 class IndexView(generic.RedirectView):
@@ -29,3 +31,20 @@ class StorysView(generic.ListView):
             fin_task_count += story.subtask_set.filter(condition=3).count()
         context['achievement_rate'] = ( fin_task_count / task_count ) * 100
         return context
+
+
+
+# タスクの状態を変更して完了メッセージを返す(Ajaxでアクセスされる想定)
+class SubTaskConditionChangeView(View):
+    def get(self,request,*args,**kwargs):
+        task_id = request.GET.get('task_id')
+        condition = request.GET.get('condition')
+        SubTask.objects.get(pk=task_id).update(condition=1 if condition == '3' else 3)
+        data = {
+            'success':success,
+        }
+        # 辞書からjson形式にシリアライズ
+        data_json = json.dumps(data)
+        return HttpResponse(data_json,content_type='application/json')
+
+
