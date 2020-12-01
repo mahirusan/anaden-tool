@@ -33,6 +33,15 @@ class SubTask(models.Model):
     created_at = models.DateTimeField('作成日',auto_now=True)
     updated_at = models.DateTimeField('更新日',auto_now=True)
 
+    # 状態変化を設定する関数(渡すのは状態の文字列にする)
+    def setConditionChange(self,condition_str):
+        if condition_str == "1":
+            self.condition = 3
+        elif condition_str == "3":
+            self.condition = 1
+        self.save()
+        pass
+
     def __str__(self):
         return self.title
 

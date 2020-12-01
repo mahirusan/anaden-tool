@@ -26,22 +26,54 @@
         <h5 class="card-title">{{ story.title }}</h5>
 
         {% load sort_tasks %}
-        {% for task in story.subtask_set.all|sort_task:'task_seq' %}
-        <div class="card task-contents" style="padding:0.3rem;">
-            <div class="row">
-                <div class="col-md-1" style="padding:0 0 0 30px;">
-                    <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+
+        <!-- 新規タスクのみの一覧を出す -->
+        <div class="new-tasks">
+            {% for task in story.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 1 %}
+            <div data-num="{{ task.id }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-11">
-                    <p>{{ task.title }}</p>
-                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
-        <div style="height:0.3vh;"></div>
-        {% endfor %}
+        
         <div style="text-align:right;">
-            <a>完了済タスクを見る</a>
+            <a class="fintask-btn" style="cursor:pointer;">完了済タスクを見る</a>
         </div>
+
+        <!-- 完了タスクのみを出す(最初はここ非表示の予定) -->
+        <div class="fin-tasks">
+            {% for task in story.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 3 %}
+            <div data-num="{{ task.id }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn clicked" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+
     </div>
 </div>
 <div style="height:1.5vh;"></div>

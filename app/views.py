@@ -37,9 +37,9 @@ class StorysView(generic.ListView):
 # タスクの状態を変更して完了メッセージを返す(Ajaxでアクセスされる想定)
 class SubTaskConditionChangeView(View):
     def get(self,request,*args,**kwargs):
-        # task_id = request.GET.get('task_id')
-        # condition = request.GET.get('condition')
-        # SubTask.objects.get(pk=task_id).update(condition=1 if condition == '3' else 3)
+        task_id = request.GET.get('task_id')
+        condition = request.GET.get('condition')
+        # SubTask.objects.get(pk=task_id).setConditionChange(condition)
         data = {
             'success':'success',
         }
