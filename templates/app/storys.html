@@ -31,7 +31,7 @@
         <div class="new-tasks">
             {% for task in story.subtask_set.all|sort_task:'task_seq' %}
             {% if task.condition == 1 %}
-            <div data-num="{{ task.id }}">
+            <div data-num="{{ task.task_seq }}">
                 <div class="card task-contents" style="padding:0.3rem;">
                     <div class="row">
                         <div class="col-md-1" style="padding:0 0 0 30px;">
@@ -56,7 +56,7 @@
         <div class="fin-tasks">
             {% for task in story.subtask_set.all|sort_task:'task_seq' %}
             {% if task.condition == 3 %}
-            <div data-num="{{ task.id }}">
+            <div data-num="{{ task.task_seq }}">
                 <div class="card task-contents" style="padding:0.3rem;">
                     <div class="row">
                         <div class="col-md-1" style="padding:0 0 0 30px;">
