@@ -38,7 +38,11 @@ $(document).on('click','.success_btn',function(){
         var finTasks = card.parents('.card-body').children('.fin-tasks');
         // 状態変化+完了タスクリストに入れる
         $this[0].dataset.condition = "3";
-        card.parent().appendTo(finTasks);
+        card.parent().fadeOut(150,function(){
+            $(this).appendTo(finTasks);
+            $(this).show();
+        });
+        // card.parent().appendTo(finTasks);
 
         // 並び替え
         var sortedFinTasks = sortCard(finTasks.children());
@@ -51,7 +55,11 @@ $(document).on('click','.success_btn',function(){
         var newTasks = card.parents('.card-body').children('.new-tasks');
         // 状態変化+新規タスクリストに入れる
         $this[0].dataset.condition = "1";
-        card.parent().appendTo(newTasks);
+        card.parent().fadeOut(150,function(){
+            $(this).appendTo(newTasks);
+            $(this).show();
+        });
+        // card.parent().appendTo(newTasks);
 
         // 並び替え
         var sortedNewTasks = sortCard(newTasks.children());
