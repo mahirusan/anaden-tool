@@ -39,7 +39,7 @@ class SubTaskConditionChangeView(View):
     def get(self,request,*args,**kwargs):
         task_id = request.GET.get('task_id')
         condition = request.GET.get('condition')
-        # SubTask.objects.get(pk=task_id).setConditionChange(condition)
+        SubTask.objects.get(pk=task_id).setConditionChange(condition)
         data = {
             'success':'success',
         }
