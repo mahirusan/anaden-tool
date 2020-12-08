@@ -73,7 +73,6 @@ $(function(){
         })
         .done(function(data){
             console.log('Ajax Success'); //[DEBUG]
-            $this.stop(true).toggleClass('clicked'); // 完了ボタンのクラスの切り替え(見た目の変化)
 
             if(condition == "1"){
                 var finTasks = card.parents('.card-body').children('.fin-tasks');
@@ -110,6 +109,12 @@ $(function(){
                     console.log("完了");
                 });
             }
+            $this.stop(true,false).toggleClass('clicked'); // 完了ボタンのクラスの切り替え(見た目の変化)
+            $('#story-achieve-rate').text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
+            $('#story-achieve-rate-bar').css({
+                width:parseInt(data[`achievement_rate`])+'%',
+                'text-align':'center',
+            }); //進捗率バーも忘れずに更新する
         }).fail(function(msg){
             console.log('Ajax Error');
         }).always(function(){
