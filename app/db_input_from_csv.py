@@ -2,6 +2,10 @@ from .models import MainTask,SubTask
 import csv
 
 
+#######################
+# python manage.py shellから実行
+#######################
+
 # csvファイルを開きヘッダーを抜いたデータだけのリストを作る
 def open_csv_to_list(file_path):
     l = []
@@ -56,12 +60,24 @@ def addStorys():
             sub = SubTask(main_task=main,title=csv_data[1] + " 「" + csv_data[2] + "」",content="無し",condition=1,task_seq=int(csv_data[0])-67)
             add_datas.append(sub)
 
-    SubTask.objects.bulk_create(add_datas)
+    SubTask.objects.bulk_create(add_datas) #最後に一気に追加
 
 
 
 
+# 外典クエスト情報の追加
+def add_gaiten():
+    add_datas = [] #作成クエリの配列の配列
+    csv_datas = open_csv_to_list("./static/csv/anaden_gaiten.csv") #csvを二次元リストに変換
+    print(csv_datas)
 
+    for csv_data in csv_datas:
+        #剣の唄と失楽の翼の場合(種類が増えたらストーリーと同じく分岐させる)
+        main = MainTask.objects.get(types=2,task_seq=1)
+        sub = SubTask(main_task=main,title=csv_data[1] + " 「" + csv_data[2] + "」",content="無し",condition=1,task_seq=int(csv_data[0]))
+        add_datas.append(sub) 
+
+    SubTask.objects.bulk_create(add_datas) #最後に一気に追加
 
 
 

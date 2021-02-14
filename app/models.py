@@ -7,9 +7,13 @@ class MainTask(models.Model):
     title = models.CharField('タイトル',max_length=64)
     TYPES = (
         (1,'メインストーリー'),
-        (2,'外伝'),
-        (3,'オリジナルタスク'),
-        (4,'その他'),
+        (2,'外典'),
+        (3,'外伝'),
+        (4,'邂逅'),
+        (5,'協奏'),
+        (6,'断章'),
+        (7,'オリジナルタスク'),
+        (8,'その他'),
     )
     types = models.IntegerField('タイプ',choices=TYPES)
     task_seq = models.IntegerField('順序',null=True,blank=True)

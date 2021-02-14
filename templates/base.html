@@ -20,11 +20,13 @@
 
       <body>
         <header style="background-image:url({% static 'images/anaden_header.JPG' %});">
+            <!-- タイトル(トップへ戻る) -->
             <div class="logo" style="float:left;">
                 <a href="/">
                     <div style="width:200px;height:60px;background-color:skyblue;opacity:0.5;">anaden-tool</div>
                 </a>
             </div>
+            <!-- サイドバーメニュー開閉ボタン -->
             <div class="menu-btn" style="float:right;">
                 <a id="menu">
                     <div style="width:50px;height:60px;background-color:#eee;opacity:0.5;"></div>
@@ -36,13 +38,14 @@
 
         <div id="wrap" style="position:relative;">
             <div class="contents">
+                <!-- メニューサイドバー -->
                 <div class="click-menu">
                     <div class="menu-content-box pr-5"></div>
                     <div class="menu-content pr-5 pt-3">
-                        <a href="#story" class="menu-link">ストーリー</a>
+                        <a href="{% url 'app:storys' %}" class="menu-link">ストーリー</a>
                     </div>
                     <div class="menu-content pr-5 pt-3">
-                        <a href="#other_story" class="menu-link">外伝</a>
+                        <a href="{% url 'app:gaitens' %}" class="menu-link">外典</a>
                     </div>
                     <div class="menu-content pr-5 pt-3">
                         <a href="#other" class="menu-link">その他</a>

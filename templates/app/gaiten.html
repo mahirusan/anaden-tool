@@ -1,0 +1,82 @@
+{% extends  "base.html" %}
+
+{% block page_title %}外典クエスト{% endblock %}
+
+{% block content %}
+<!-- 外典クエスト達成率カードの設置-->
+<!-- <div class="card">
+    <div class="card-body">
+        <h5 class="card-title">あなたのストーリーの達成率は</h5>
+        <div class="progress">
+            <div id="story-achieve-rate-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+            role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:{{ achievement_rate }}%;text-align:center;"></div>
+        </div>
+        <div class="progress-values" style="text-align:center;">
+            <h3 id="story-achieve-rate">{{ achievement_rate }}%です</h3>
+        </div>
+    </div>
+</div>
+
+<div style="height:2vh;"></div> -->
+
+<!-- 外典クエストタスクカードの設置-->
+{% for gaiten in gaitens %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ gaiten.title }}</h5>
+
+        {% load sort_tasks %}
+
+        <!-- 新規タスクのみの一覧を出す -->
+        <div class="new-tasks">
+            {% for task in gaiten.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 1 %}
+            <div data-num="{{ task.task_seq }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div style="text-align:right;">
+            <a class="fintask-btn" style="cursor:pointer;">完了済タスクを見る</a>
+        </div>
+
+        <!-- 完了タスクのみを出す(最初はここ非表示の予定) -->
+        <div class="fin-tasks">
+            {% for task in gaiten.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 3 %}
+            <div data-num="{{ task.task_seq }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn clicked" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+<div style="height:1.5vh;"></div>
+{% endfor %}
+
+{% endblock %}
