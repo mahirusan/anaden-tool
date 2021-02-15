@@ -43,11 +43,19 @@ class SubTaskConditionChangeView(View):
     def get(self,request,*args,**kwargs):
         task_id = request.GET.get('task_id')
         condition = request.GET.get('condition')
+        req_type = request.GET.get('req_type') #リクエストタイプ(get_main_achievement_rateに繋げる)
         SubTask.objects.get(pk=task_id).setConditionChange(condition)
+        if req_type == "story":
+            achievement_rate = get_main_achievement_rate(req_type) #達成率の取得
+        else:
+            achievement_rate = ','.join(get_main_achievement_rate(req_type)) #達成率リストを取得しカンマ区切りで連結
+            
         data = {
             'success':'success',
-            'achievement_rate':get_main_achievement_rate("story"),
+            'achievement_rate':achievement_rate,
+            'req_type':req_type
         }
+        
         # 辞書からjson形式にシリアライズ
         data_json = json.dumps(data)
         return HttpResponse(data_json,content_type='application/json')

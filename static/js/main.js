@@ -60,6 +60,7 @@ $(function(){
         var $this = $(this);
         var taskId = $this.data('taskid');
         var condition = $this.data('condition');
+        var reqType = $this.data('reqtype');
         var card = $this.parents('.card.task-contents');
 
         $.ajax({
@@ -68,7 +69,8 @@ $(function(){
             dataType:"json",
             data:{
                 "task_id":taskId,
-                "condition":condition
+                "condition":condition,
+                "req_type":reqType
             }
         })
         .done(function(data){
@@ -110,11 +112,24 @@ $(function(){
                 });
             }
             $this.stop(true,false).toggleClass('clicked'); // 完了ボタンのクラスの切り替え(見た目の変化)
-            $('#story-achieve-rate').text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
-            $('#story-achieve-rate-bar').css({
-                width:parseInt(data[`achievement_rate`])+'%',
-                'text-align':'center',
-            }); //進捗率バーも忘れずに更新する
+
+            ////////////////////
+            // 達成率の更新
+            ///////////////////
+            if(data['req_type'] == "story"){
+                $('#story-achieve-rate').text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
+                $('#story-achieve-rate-bar').css({
+                    width:parseInt(data[`achievement_rate`])+'%',
+                    'text-align':'center',
+                }); //進捗率バーも忘れずに更新する
+            }else{
+                $('#story-achieve-rate').text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
+                $('#story-achieve-rate-bar').css({
+                    width:parseInt(data[`achievement_rate`])+'%',
+                    'text-align':'center',
+                }); //進捗率バーも忘れずに更新する
+            }
+
         }).fail(function(msg){
             console.log('Ajax Error');
         }).always(function(){
