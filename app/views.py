@@ -24,14 +24,18 @@ def get_main_achievement_rate(eventStr):
         for task in main:
             task_count += task.subtask_set.all().count() # 全タスク数の取得
             fin_task_count += task.subtask_set.filter(condition=3).count() # 完了済みタスクの取得
-        achievement_rate = round(( fin_task_count / task_count ) * 100,1) # 達成率の計算
-        return achievement_rate
+        if task_count != 0:
+            achievement_rate = round(( fin_task_count / task_count ) * 100,1) # 達成率の計算
+            return achievement_rate
     else:
         achievementArray = [] #このリストに項目ごとの達成率を入れていく
         for task in main:
             task_count = task.subtask_set.all().count() # 全タスク数の取得
             fin_task_count = task.subtask_set.filter(condition=3).count() # 完了済みタスクの取得
-            achievement_rate = round(( fin_task_count / task_count ) * 100,1) # 達成率の計算
+            if task_count != 0:
+                achievement_rate = round(( fin_task_count / task_count ) * 100,1) # 達成率の計算
+            else:
+                achievement_rate = 0
             achievementArray.append(achievement_rate) # 達成率を配列に退避
         return achievementArray
     
@@ -96,3 +100,7 @@ class GaitensView(generic.ListView):
         return MainTask.objects.filter(types=2)
 
     # 外典の達成率もそれぞれ取得しセット(外典ごとに取得)
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['achievement_rates'] = get_main_achievement_rate("gaiten")
+        return context
