@@ -45,19 +45,22 @@ def get_main_achievement_rate(eventStr):
 # タスクの状態を変更して完了メッセージを返す(Ajaxでアクセスされる想定)
 class SubTaskConditionChangeView(View):
     def get(self,request,*args,**kwargs):
-        task_id = request.GET.get('task_id')
-        condition = request.GET.get('condition')
+        task_id = request.GET.get('task_id') #subtaskのidの取得(採番数が増えるのでいずれ別の方法を検討すべき)
+        condition = request.GET.get('condition') #現在のsubtaskの状態の取得
         req_type = request.GET.get('req_type') #リクエストタイプ(get_main_achievement_rateに繋げる)
+        main_seq = request.GET.get('main_seq') #MainTaskのtypes(順序)、ない場合でもnoneを返す
         SubTask.objects.get(pk=task_id).setConditionChange(condition)
         if req_type == "story":
             achievement_rate = get_main_achievement_rate(req_type) #達成率の取得
         else:
-            achievement_rate = ','.join(get_main_achievement_rate(req_type)) #達成率リストを取得しカンマ区切りで連結
-            
+            achievementArray = get_main_achievement_rate(req_type) #達成率リストを取得しカンマ区切りで連結
+            achievement_rate = achievementArray[int(main_seq) - 1] #渡されたメインタスクの順序に合わせた達成率を取得
+
         data = {
             'success':'success',
             'achievement_rate':achievement_rate,
-            'req_type':req_type
+            'req_type':req_type,
+            'main_seq':main_seq
         }
         
         # 辞書からjson形式にシリアライズ

@@ -19,11 +19,11 @@
             <div class="card-body">
                 <h5 class="card-title">あなたの{{ gaiten.title }}の達成率は</h5>
                 <div class="progress">
-                    <div id="story-achieve-rate-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                    <div id="story-achieve-rate-bar-{{ gaiten.task_seq }}" class="progress-bar progress-bar-striped progress-bar-animated" 
                     role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:{{ achievement_rate }}%;text-align:center;"></div>
                 </div>
                 <div class="progress-values" style="text-align:center;">
-                    <h3 id="story-achieve-rate">{{ achievement_rate }}%です</h3>
+                    <h3 id="story-achieve-rate-{{ gaiten.task_seq }}">{{ achievement_rate }}%です</h3>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 <div class="card task-contents" style="padding:0.3rem;">
                     <div class="row">
                         <div class="col-md-1" style="padding:0 0 0 30px;">
-                            <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}" data-reqtype="gaiten"></div>
+                            <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}" data-reqtype="gaiten" data-mainseq="{{ gaiten.task_seq }}"></div>
                         </div>
                         <div class="col-md-11">
                             <p>{{ task.title }}</p>
@@ -68,7 +68,7 @@
                 <div class="card task-contents" style="padding:0.3rem;">
                     <div class="row">
                         <div class="col-md-1" style="padding:0 0 0 30px;">
-                            <div class="success_btn clicked" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}"></div>
+                            <div class="success_btn clicked" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}" data-reqtype="gaiten" data-mainseq="{{ gaiten.task_seq }}"></div>
                         </div>
                         <div class="col-md-11">
                             <p>{{ task.title }}</p>

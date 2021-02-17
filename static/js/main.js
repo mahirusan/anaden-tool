@@ -61,6 +61,7 @@ $(function(){
         var taskId = $this.data('taskid');
         var condition = $this.data('condition');
         var reqType = $this.data('reqtype');
+        var mainSeq = reqType != "story" ? $this.data('mainseq') : "none";
         var card = $this.parents('.card.task-contents');
 
         $.ajax({
@@ -70,7 +71,8 @@ $(function(){
             data:{
                 "task_id":taskId,
                 "condition":condition,
-                "req_type":reqType
+                "req_type":reqType,
+                "main_seq":mainSeq
             }
         })
         .done(function(data){
@@ -123,8 +125,8 @@ $(function(){
                     'text-align':'center',
                 }); //進捗率バーも忘れずに更新する
             }else{
-                $('#story-achieve-rate').text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
-                $('#story-achieve-rate-bar').css({
+                $('#story-achieve-rate-'+data['main_seq']).text(data[`achievement_rate`]+"%です"); //進捗率のところの変更
+                $('#story-achieve-rate-bar-'+data['main_seq']).css({
                     width:parseInt(data[`achievement_rate`])+'%',
                     'text-align':'center',
                 }); //進捗率バーも忘れずに更新する
