@@ -107,3 +107,22 @@ class GaitensView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['achievement_rates'] = get_main_achievement_rate("gaiten")
         return context
+
+
+# 外伝クエスト画面のView
+class GaidensView(generic.ListView):
+    template_name = "app/gaiden.html"
+    model = MainTask
+    context_object_name = "gaidens"
+
+    # 外伝クエストの情報だけ取得
+    def get_queryset(self):
+        #外伝クエストのデータだけ取得
+        return MainTask.objects.filter(types=3)
+
+    # 外伝の達成率もそれぞれ取得しセット
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['achievement_rates'] = get_main_achievement_rate("gaiden")
+        return context
+

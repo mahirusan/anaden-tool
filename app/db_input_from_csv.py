@@ -81,4 +81,72 @@ def add_gaiten():
 
 
 
+# 外伝クエスト情報の追加(メイン)
+def add_gaiden_main():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_gaiden')
 
+    for csv_data in csv_datas:
+        # 外伝情報の作成
+        main = MainTask(title=csv_data[1],types=3,task_seq=int(csv_data[1]))
+        add_datas(main)
+
+    MainTask.objects.bulk_create(add_datas)
+
+
+# 外伝クエスト情報の追加(サブ)
+def add_gaiden_sub():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_gaiden')
+
+    for csv_data in csv_datas:
+        main = MainTask.objects.get(types=3,task_seq=int(csv_data[0]))
+        # 特殊処理(また変わるかも)
+        title = csv_data[2].replace('：','').replace('"','').replace('「','').replace('」','').replace('攻略','')
+        sub = SubTask(main_task=main,title=title[0:3] + ' 「' + title[3:]+ '」',task_seq=int(csv_data[1]))
+        add_datas(sub)
+
+    MainTask.objects.bulk_create(add_datas)
+
+
+
+# 邂逅クエスト情報の追加(メイン)
+def add_kaikou_main():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_kaikou')
+
+    for csv_data in csv_datas:
+        main = MainTask(title=csv_data[1],types=4,task_seq=int(csv_data[0]))
+        add_datas(main)
+
+    MainTask.objects.bulk_create(add_datas)
+
+
+# 邂逅クエスト情報の追加(サブ)
+def add_kaikou_sub():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kaikou')
+
+
+# 断章クエスト情報の追加(メイン)
+def add_dansyo_main():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_dansyo')
+
+
+# 断章クエスト情報の追加(サブ)
+def add_dansyo_sub():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_dansyo')
+
+
+# 協奏クエスト情報の追加(メイン)
+def add_kyouso_main():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_kyouso')
+
+
+# 協奏クエスト情報の追加(サブ)
+def add_kyouso_sub():
+    add_datas = []
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kyouso')
