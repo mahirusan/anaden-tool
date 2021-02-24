@@ -89,7 +89,7 @@ def add_gaiden_main():
     for csv_data in csv_datas:
         # 外伝情報の作成
         main = MainTask(title=csv_data[1],types=3,task_seq=int(csv_data[1]))
-        add_datas(main)
+        add_datas.append(main)
 
     MainTask.objects.bulk_create(add_datas)
 
@@ -104,9 +104,9 @@ def add_gaiden_sub():
         # 特殊処理(また変わるかも)
         title = csv_data[2].replace('：','').replace('"','').replace('「','').replace('」','').replace('攻略','')
         sub = SubTask(main_task=main,title=title[0:3] + ' 「' + title[3:]+ '」',task_seq=int(csv_data[1]))
-        add_datas(sub)
+        add_datas.append(sub)
 
-    MainTask.objects.bulk_create(add_datas)
+    SubTask.objects.bulk_create(add_datas)
 
 
 
@@ -117,7 +117,7 @@ def add_kaikou_main():
 
     for csv_data in csv_datas:
         main = MainTask(title=csv_data[1],types=4,task_seq=int(csv_data[0]))
-        add_datas(main)
+        add_datas.append(main)
 
     MainTask.objects.bulk_create(add_datas)
 
@@ -127,17 +127,39 @@ def add_kaikou_sub():
     add_datas = []
     csv_datas = open_csv_to_list('./static/csv/anaden_sub_kaikou')
 
+    for csv_data in csv_datas:
+        main = MainTask.objects.get(types=4,task_seq=int(csv_data[0]))
+        title = csv_data[2]
+        sub = SubTask(main_task=main,title=title,task_seq=int(csv_data[1]))
+        add_datas.append(sub)
+
+    SubTask.object.bulk_create(add_datas)
+
 
 # 断章クエスト情報の追加(メイン)
 def add_dansyo_main():
     add_datas = []
     csv_datas = open_csv_to_list('./static/csv/anaden_main_dansyo')
 
+    for csv_data in csv_datas:
+        main = MainTask(title=csv_data[1],types=5,task_seq=int(csv_data[0]))
+        add_datas.append(main)
+
+    MainTask.objects.bulk_create(add_datas)
+
 
 # 断章クエスト情報の追加(サブ)
 def add_dansyo_sub():
     add_datas = []
     csv_datas = open_csv_to_list('./static/csv/anaden_sub_dansyo')
+
+    for csv_data in csv_datas:
+        main = MainTask.objects.get(types=5,task_seq=int(csv_data[0]))
+        title = csv_data[2].replace("：","")
+        sub = SubTask(main_task=main,title=title[0:3] + " 「" + title[3:] + "」",task_seq=int(csv_data[1]))
+        add_datas.append(sub)
+
+    SubTask.pbjects.bulk_create(add_datas)
 
 
 # 協奏クエスト情報の追加(メイン)
