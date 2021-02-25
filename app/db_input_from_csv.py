@@ -167,8 +167,22 @@ def add_kyouso_main():
     add_datas = []
     csv_datas = open_csv_to_list('./static/csv/anaden_main_kyouso')
 
+    for csv_data in csv_datas:
+        main = MainTask(title=csv_data[1],type=6,task_seq=int(csv_data[0]))
+        add_datas.append(main)
+
+    MainTask.objects.bulk_create(add_datas)
+
 
 # 協奏クエスト情報の追加(サブ)
 def add_kyouso_sub():
     add_datas = []
     csv_datas = open_csv_to_list('./static/csv/anaden_sub_kyouso')
+
+    for csv_data in csv_datas:
+        main = MainTask.objects.get(types=6,task_seq=int(csv_data[0]))
+        title = csv_data[2]
+        sub = SubTask(main_task=main,title=title,task_seq=int(csv_data[1]))
+        add_datas.append(sub)
+
+    SubTask.objects.bulk_create(add_datas)
