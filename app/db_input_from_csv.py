@@ -84,11 +84,11 @@ def add_gaiten():
 # 外伝クエスト情報の追加(メイン)
 def add_gaiden_main():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_main_gaiden')
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_gaiden.csv')
 
     for csv_data in csv_datas:
         # 外伝情報の作成
-        main = MainTask(title=csv_data[1],types=3,task_seq=int(csv_data[1]))
+        main = MainTask(title=csv_data[1],types=3,task_seq=int(csv_data[0]))
         add_datas.append(main)
 
     MainTask.objects.bulk_create(add_datas)
@@ -97,7 +97,7 @@ def add_gaiden_main():
 # 外伝クエスト情報の追加(サブ)
 def add_gaiden_sub():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_sub_gaiden')
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_gaiden.csv')
 
     for csv_data in csv_datas:
         main = MainTask.objects.get(types=3,task_seq=int(csv_data[0]))
@@ -113,7 +113,7 @@ def add_gaiden_sub():
 # 邂逅クエスト情報の追加(メイン)
 def add_kaikou_main():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_main_kaikou')
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_kaikou.csv')
 
     for csv_data in csv_datas:
         main = MainTask(title=csv_data[1],types=4,task_seq=int(csv_data[0]))
@@ -125,7 +125,7 @@ def add_kaikou_main():
 # 邂逅クエスト情報の追加(サブ)
 def add_kaikou_sub():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kaikou')
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kaikou.csv')
 
     for csv_data in csv_datas:
         main = MainTask.objects.get(types=4,task_seq=int(csv_data[0]))
@@ -133,13 +133,13 @@ def add_kaikou_sub():
         sub = SubTask(main_task=main,title=title,task_seq=int(csv_data[1]))
         add_datas.append(sub)
 
-    SubTask.object.bulk_create(add_datas)
+    SubTask.objects.bulk_create(add_datas)
 
 
 # 断章クエスト情報の追加(メイン)
 def add_dansyo_main():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_main_dansyo')
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_dansyo.csv')
 
     for csv_data in csv_datas:
         main = MainTask(title=csv_data[1],types=5,task_seq=int(csv_data[0]))
@@ -151,7 +151,7 @@ def add_dansyo_main():
 # 断章クエスト情報の追加(サブ)
 def add_dansyo_sub():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_sub_dansyo')
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_dansyo.csv')
 
     for csv_data in csv_datas:
         main = MainTask.objects.get(types=5,task_seq=int(csv_data[0]))
@@ -159,16 +159,16 @@ def add_dansyo_sub():
         sub = SubTask(main_task=main,title=title[0:3] + " 「" + title[3:] + "」",task_seq=int(csv_data[1]))
         add_datas.append(sub)
 
-    SubTask.pbjects.bulk_create(add_datas)
+    SubTask.objects.bulk_create(add_datas)
 
 
 # 協奏クエスト情報の追加(メイン)
 def add_kyouso_main():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_main_kyouso')
+    csv_datas = open_csv_to_list('./static/csv/anaden_main_kyosou.csv')
 
     for csv_data in csv_datas:
-        main = MainTask(title=csv_data[1],type=6,task_seq=int(csv_data[0]))
+        main = MainTask(title=csv_data[1],types=6,task_seq=int(csv_data[0]))
         add_datas.append(main)
 
     MainTask.objects.bulk_create(add_datas)
@@ -177,7 +177,7 @@ def add_kyouso_main():
 # 協奏クエスト情報の追加(サブ)
 def add_kyouso_sub():
     add_datas = []
-    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kyouso')
+    csv_datas = open_csv_to_list('./static/csv/anaden_sub_kyosou.csv')
 
     for csv_data in csv_datas:
         main = MainTask.objects.get(types=6,task_seq=int(csv_data[0]))
