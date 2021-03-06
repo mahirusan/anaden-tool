@@ -10,8 +10,8 @@ eventNumDict = {
     "gaiten":2,
     "gaiden":3,
     "kaikou":4,
-    "kyosou":5,
-    "dansyo":6
+    "dansyo":5,
+    "kyosou":6
 }
 
 # タイプの項目ごとの達成率を返す関数 return->項目ごとの達成率をセットした配列 ※storyのみ全体の達成率をそのまま返す
@@ -111,18 +111,75 @@ class GaitensView(generic.ListView):
 
 # 外伝クエスト画面のView
 class GaidensView(generic.ListView):
-    template_name = "app/gaiden.html"
+    template_name = "app/event_view.html"
     model = MainTask
-    context_object_name = "gaidens"
+    context_object_name = "maintasks"
 
     # 外伝クエストの情報だけ取得
     def get_queryset(self):
         #外伝クエストのデータだけ取得
         return MainTask.objects.filter(types=3)
 
-    # 外伝の達成率もそれぞれ取得しセット
+    # 外伝の達成率もそれぞれ取得しセット(contextオブジェクトにキーと値を入れておくとtemplateに持っていける)
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['achievement_rates'] = get_main_achievement_rate("gaiden")
+        context['reqtype'] = "gaiden"
         return context
 
+
+# 邂逅クエスト画面のView
+class KaikousView(generic.ListView):
+    template_name = "app/event_view.html"
+    model = MainTask
+    context_object_name = "maintasks"
+
+    # 邂逅クエストの情報だけ取得
+    def get_queryset(self):
+        # 外伝クエストのデータだけ取得
+        return MainTask.objects.filter(types=4)
+
+    # 邂逅の達成率もそれぞれ取得しセット
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['achievement_rates'] = get_main_achievement_rate("kaikou")
+        context['reqtype'] = "kaikou"
+        return context
+
+
+#断章クエスト画面のView
+class DansyosView(generic.ListView):
+    template_name = "app/event_view.html"
+    model = MainTask
+    context_object_name = "maintasks"
+
+     # 邂逅クエストの情報だけ取得
+    def get_queryset(self):
+        # 外伝クエストのデータだけ取得
+        return MainTask.objects.filter(types=5)
+
+    # 邂逅の達成率もそれぞれ取得しセット
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['achievement_rates'] = get_main_achievement_rate("dansyo")
+        context['reqtype'] = "dansyo"
+        return context
+
+
+#協奏クエスト画面のView
+class KyosousView(generic.ListView):
+    template_name = "app/event_view.html"
+    model = MainTask
+    context_object_name = "maintasks"
+
+     # 協奏クエストの情報だけ取得
+    def get_queryset(self):
+        # 外伝クエストのデータだけ取得
+        return MainTask.objects.filter(types=6)
+
+    # 協奏の達成率もそれぞれ取得しセット
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['achievement_rates'] = get_main_achievement_rate("kyosou")
+        context['reqtype'] = "kyosou"
+        return context

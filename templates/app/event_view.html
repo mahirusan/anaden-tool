@@ -1,0 +1,91 @@
+{% extends  "base.html" %}
+
+{% block page_title %}外伝クエスト{% endblock %}
+
+{% block content %}
+
+<!-- イベントクエストタスクカードの設置-->
+{% for maintask in maintasks %}
+{% with forloop.counter as outer_counter %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ maintask.title }}</h5>
+
+        <!-- イベントクエスト達成率カードの設置-->
+        {% for achievement_rate in achievement_rates %}
+        {% with forloop.counter as inner_counter %}
+        {% if outer_counter == inner_counter %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">あなたの{{ maintask.title }}の達成率は</h5>
+                <div class="progress">
+                    <div id="story-achieve-rate-bar-{{ maintask.task_seq }}" class="progress-bar progress-bar-striped progress-bar-animated" 
+                    role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:{{ achievement_rate }}%;text-align:center;"></div>
+                </div>
+                <div class="progress-values" style="text-align:center;">
+                    <h3 id="story-achieve-rate-{{ maintask.task_seq }}">{{ achievement_rate }}%です</h3>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% endfor %}
+
+<div style="height:2vh;"></div>
+
+        {% load sort_tasks %}
+
+        <!-- 新規タスクのみの一覧を出す -->
+        <div class="new-tasks">
+            {% for task in maintask.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 1 %}
+            <div data-num="{{ task.task_seq }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}" data-reqtype="{{ reqtype }}" data-mainseq="{{ maintask.task_seq }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div style="text-align:right;">
+            <a class="fintask-btn" style="cursor:pointer;">完了済タスクを見る</a>
+        </div>
+
+        <!-- 完了タスクのみを出す(最初はここ非表示の予定) -->
+        <div class="fin-tasks">
+            {% for task in maintask.subtask_set.all|sort_task:'task_seq' %}
+            {% if task.condition == 3 %}
+            <div data-num="{{ task.task_seq }}">
+                <div class="card task-contents" style="padding:0.3rem;">
+                    <div class="row">
+                        <div class="col-md-1" style="padding:0 0 0 30px;">
+                            <div class="success_btn clicked" data-taskid="{{ task.id }}" data-condition="{{ task.condition }}" data-reqtype="{{ reqtype }}" data-mainseq="{{ maintask.task_seq }}"></div>
+                        </div>
+                        <div class="col-md-11">
+                            <p>{{ task.title }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-space" style="height:0.3vh;"></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+<div style="height:1.5vh;"></div>
+{% endwith %}
+{% endfor %}
+
+{% endblock %}
